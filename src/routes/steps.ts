@@ -1,6 +1,6 @@
 import {getUserInfo, stepChangeFilter, stepError, stepGenerationTable, stepLink} from "../controlles/steps";
-const express = require('express')
-const router = express.Router()
+import express, {Router} from "express";
+const router: Router = express.Router()
 
 router.get('/userinfo/:sub', getUserInfo)
 router.post('/link', stepLink)

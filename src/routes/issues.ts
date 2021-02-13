@@ -1,6 +1,6 @@
-const express = require('express')
+import express, {Router} from "express";
 import {getIssues} from '../controlles/issues'
-const router = express.Router()
+const router: Router = express.Router()
 
 router.post('/', getIssues)
 

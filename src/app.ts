@@ -1,17 +1,18 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const {v4: uuidv4} = require('uuid')
-require('dotenv').config()
+import express, {Application, Request, Response, NextFunction} from "express";
+import bodyParser from "body-parser";
 import issuesRouter from "./routes/issues";
 import filterRouter from "./routes/filter";
 import stepsRouter from "./routes/steps";
 import {Logger} from "./logger/logger";
 import {asyncLocalStorage} from "./async-storage";
+import dotenv from 'dotenv'
 
-const app = express()
+dotenv.config()
 
-app.use((req, res, next) => {
-    const traceId = req.headers['x-request-id'] || uuidv4()
+const app: Application = express()
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    const traceId: string | string[] = req.headers['x-request-id'] || String(Date.now())
     asyncLocalStorage.run(new Map(), () => {
         Logger.init(traceId)
         next()

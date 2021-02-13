@@ -1,6 +1,6 @@
 import {asyncLocalStorage} from "../async-storage";
-
-const logger = require('pino')({
+import pino from "pino";
+const logger = pino({
     prettyPrint: true
 })
 
@@ -8,16 +8,18 @@ const logger = require('pino')({
 
 
 export class Logger {
-    static init(traceId: string) {
+    static init(traceId: string | string[]) {
         const store = asyncLocalStorage.getStore()
         const childLogger = logger.child({
             traceId
         })
+        // @ts-ignore
         store.set('logger', childLogger)
     }
 
     static get() {
         const store = asyncLocalStorage.getStore()
+        // @ts-ignore
         const childLogger = store?.get('logger')
         return childLogger ? childLogger : logger
     }

@@ -2,7 +2,7 @@ export class FilterGradationData {
     static filter<T>(arr: T[]) {
         const o = Object.create(null)
         const newArr = []
-        for (let key of arr) {
+        for (const key of arr) {
             // @ts-ignore
             if (!o[key.name]) {
                 // @ts-ignore

@@ -4,10 +4,10 @@ import {differentDate} from "../middleware/differentDate";
 import {CreateArrayPositions} from "./CreateArrayPositions";
 
 export class ParseIssue {
-    readonly responseData: ResponseData
+    readonly responseData: ResponseData | undefined
     private data: TypeIssue
-    private positionY
-    private positionX
+    private positionY = {} as { [x: string]: any; }
+    private positionX = {} as { [x: string]: any; }
     private priority = [] as Priority[]
     private status = [] as Status[]
     private issuetype = [] as IssueType[]
@@ -30,8 +30,12 @@ export class ParseIssue {
         this.issuetype = FilterGradationData.filter<IssueType>(this.issuetype)
         this.assignee = FilterGradationData.filter<Assignee>(this.assignee)
 
+
+        // @ts-ignore
         this.status = FilterGradationData.gradation<string, Status>(['To Do', 'In Progress', 'In Review', 'Done'], this.status)
+        // @ts-ignore
         this.priority = FilterGradationData.gradation<string, Priority>(['Highest', 'High', 'Medium', 'Low', 'Lowest'], this.priority)
+        // @ts-ignore
         this.issuetype = FilterGradationData.gradation<string, IssueType>(['Bug', 'Task', 'Improvement', 'New Feature'], this.issuetype)
 
         this.positionY = CreateArrayPositions.createPositionsPoint(this.issuetype)
@@ -50,7 +54,7 @@ export class ParseIssue {
 
     private setArraySchemaIssues() {
         this.assignee.forEach(item => {
-            const createArray = new CreateArrayPositions
+            const createArray = new CreateArrayPositions()
             item.issues = createArray.createLevelsArray(this.issuetype, this.priority)
         })
     }
