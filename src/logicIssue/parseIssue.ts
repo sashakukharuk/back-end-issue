@@ -31,11 +31,8 @@ export class ParseIssue {
         this.assignee = FilterGradationData.filter<Assignee>(this.assignee)
 
 
-        // @ts-ignore
         this.status = FilterGradationData.gradation<string, Status>(['To Do', 'In Progress', 'In Review', 'Done'], this.status)
-        // @ts-ignore
         this.priority = FilterGradationData.gradation<string, Priority>(['Highest', 'High', 'Medium', 'Low', 'Lowest'], this.priority)
-        // @ts-ignore
         this.issuetype = FilterGradationData.gradation<string, IssueType>(['Bug', 'Task', 'Improvement', 'New Feature'], this.issuetype)
 
         this.positionY = CreateArrayPositions.createPositionsPoint(this.issuetype)
